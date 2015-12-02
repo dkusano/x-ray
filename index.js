@@ -58,7 +58,8 @@ function Xray() {
       stream: false,
       concurrency: Infinity,
       paginate: false,
-      limit: Infinity
+      limit: Infinity,
+      parsingOptions: {}
     }, state || {});
 
     var store = enstore();
@@ -163,7 +164,7 @@ function Xray() {
     }
 
     function load(html, url) {
-      var $ = html.html ? html : cheerio.load(html);
+      var $ = html.html ? html : cheerio.load(html, state.parsingOptions);
       if (url) $ = absolutes(url, $);
       return $;
     }
@@ -218,6 +219,12 @@ function Xray() {
     node.limit = function(limit) {
       if (!arguments.length) return state.limit;
       state.limit = limit;
+      return node;
+    }
+
+    node.parsingOptions = function(options) {
+      if (!arguments.length) return state.parsingOptions;
+      state.parsingOptions = options;
       return node;
     }
 

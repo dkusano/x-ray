@@ -262,6 +262,17 @@ describe('Xray()', function() {
     });
   });
 
+  it('should work with parsingOptions', function(done) {
+    var x = Xray();
+
+    x('<footer><p>Copyright &copy; 2003-2014</p></footer>', 'footer').parsingOptions({decodeEntities: false})
+    (function(err, str) {
+      if (err) return done(err);
+      assert.equal('Copyright &copy; 2003-2014', str);
+      done();
+    });
+  });
+
   describe('.format()', function() {
     it('should support adding formatters', function() {
       // TODO
